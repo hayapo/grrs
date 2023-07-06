@@ -1,9 +1,8 @@
-fn main() {
-  let result = std::fs::read_to_string("src/main.rs");
-  let content = match result {
-    Ok(content) => { content },
-    Err(error) => { return Err(error.into());}
-  };
+use anyhow::{Context, Result};
+
+fn main() -> Result<()> {
+  let path = "text.txt";
+  let content = std::fs::read_to_string(path).with_context(|| format!("could not read file {}", path))?;
   println!("file content: {}", content);
   Ok(())
 }
